@@ -37,6 +37,17 @@ def parseHash(hashstr):
 
     return bytes_to_long(hash_contents)
 
+def getHashLength(hashstr):
+    hashint = base58.decode(hashstr)
+    hashbytes = int_to_byte_array(hashint)
+    if len(hashbytes) < 3:
+        raise Exception("Multihash must be at least 3 bytes")
+
+    #hash_func_id = hashbytes[0]
+    hash_length = int(hashbytes[1])
+    return hash_length
+
+
 def genHash(bytes,func_id):
     hashfunc = None
     if func_id == 0x11:
